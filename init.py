@@ -1,5 +1,6 @@
 import os
 import shutil
+from sys import argv
 
 def prompt(message, validate):
     res = None
@@ -53,6 +54,10 @@ def main ():
 
 	with open(os.path.join(folder, "README.md"), 'w') as f:
 	  f.write("#" + pluginName)
+
+	os.remove(argv[0])
+	os.remove(os.path.join(folder, "console.png"))
+
 
 
 if __name__ == '__main__':
