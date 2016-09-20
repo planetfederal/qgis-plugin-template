@@ -1,0 +1,21 @@
+[general]
+name=[pluginname]
+description=
+about=<p></p><p>This plugin is available with a Boundless Desktop&nbsp;&mdash; Enterprise Subscription. <a href="https://connect.boundlessgeo.com/UserLogin?returnurl=%2fPurchase-Boundless-Desktop" style="font: bold; text-decoration: none; background-color: #edd400; color: #333333; padding: 2px 6px 2px 6px; border-top: 1px solid #c4a000; border-right: 1px solid #c4a000; border-bottom: 1px solid #c4a000; border-left: 1px solid #c4a000;">Get&nbsp;access</a></p>
+category=Plugins
+qgisMinimumVersion=2.0
+version=1.0
+
+author=Boundless
+email=info@boundlessgeo.com
+
+icon=base.png
+
+tags=boundless
+
+homepage=http://boundlessgeo.com
+tracker=https://github.com/boundlessgeo/qgis-[pluginshortname]-plugin/issues
+repository=https://github.com/boundlessgeo/qgis-[pluginshortname]-plugin
+
+experimental=False
+deprecated=False
