@@ -14,9 +14,9 @@ You will be prompted to enter the name of your plugin, a short name (with no spa
 
 The script will modify the template files and leave the content of the folder ready to be used for creating your own plugin.
 
-You might want to remove the `.git` folder, in case you have cloned the repo (the script will try to remove it, but that might fail in some cases), and the `init.py` file.
+You might want to remove the `.git` folder, in case you have cloned the repo (the script will try to remove it, but that might fail in some cases).
 
-Notice that, since the script modifies the template files in place, once you run it, you will not be able to run it again (you can actually run it, but it won't work as expected). 
+Notice that, since the script modifies the template files in place, once you run it, you will not be able to run it again (you could actually run it, but it wouldn't work as expected). The `init.py` file is removed after it's executed.
 
 ## What it contains
 
