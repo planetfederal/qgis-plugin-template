@@ -1,18 +1,16 @@
-Welcome to [pluginname] QGIS Plugin's documentation!
-====================================================
+.. (c) 2016 Boundless, http://boundlessgeo.com
+   This code is licensed under the GPL 2.0 license.
 
-Contents:
+[pluginname] QGIS Plugin's documentation
+========================================
+
+<Small plugin description>
+
+Documentation contents:
 
 .. toctree::
    :maxdepth: 2
 
-   intro
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   installation
+   usage
 

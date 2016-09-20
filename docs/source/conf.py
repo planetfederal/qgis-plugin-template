@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'[pluginname]'
-copyright = u'2016, Boundless'
+copyright = u'2016, Boundless Spatial'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -127,7 +127,7 @@ html_theme_path = ['../themes']
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# html_static_path = ['_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -220,6 +220,12 @@ latex_documents = [
 # If false, no module index is generated.
 #latex_domain_indices = True
 
+# Substitutions
+rst_epilog = """
+.. |BLQGIS| replace:: *Bouldless Desktop*
+.. |current_plugin| replace:: *[pluginname]*
+"""
+
 
 # -- Options for manual page output ---------------------------------------
 
@@ -241,7 +247,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', '[pluginshortname]', u'[pluginname] QGIS Plugin Documentation',
-   u'Victor Olaya', 'MIL-STD-2525QGISPlugin', 'One line description of project.',
+   u'Victor Olaya', u'[pluginshortname]QGISPlugin', 'One line description of project.',
    'Miscellaneous'),
 ]
 
