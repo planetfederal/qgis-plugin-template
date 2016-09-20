@@ -6,13 +6,9 @@ A template for plugins.
 
 Clone this repo or just copy its content in you system
 
-Open a terminal in the folder where the content of this repo is found, and type:
+Open a terminal in the folder where the content of this repo is found, and type `python init.py`.
 
-::
-
-	$ python init.py
-
-You will be prompted to enter the name of your plugin, a shor name (with no spaces, to be usedfor folder name, etc), and a class name. Default options for shortname and class name will be proposed based on the plugin name,soyou donot need to explicitely type them unless you want to use different names.
+You will be prompted to enter the name of your plugin, a short name (with no spaces, to be used for folder name, etc), and a class name. Default options for short name and class name will be proposed based on the plugin name,so you do not need to explicitely type them unless you want to use different names.
 
 ![](console.png)
 
@@ -30,11 +26,11 @@ The created plugin template has the following elements
 
 * A `docs`folder with a Sphinx project. Edit the `docs/source/index.rst` file to add content. By default, t contains a single input file, `intro.rst`, which is empty.
 
-* A `_lessons` folder in the plugin folder, with the required structure to add lessons by adding subfolders. A single sample lesson is added in a folder named `samplelesson`. Use that as template to add more lessons. Lessons will be automatically added when the plugin is loaded, since the necesary code is already in the plugin class constructor.
+* A `_lessons` folder in the plugin folder, with the required structure to add lessons by adding subfolders. A single sample lesson is added in a folder named `samplelesson`. Use that as template to add more lessons. Lessons will be automatically added when the plugin is loaded, since the necessary code is already in the plugin class constructor.
 
-* A `_tests` folder in the plugin folder, with the required structure to add tests for the Tester plugin. A `testerplugin.py` file is added, which contains sample unit and semi-automatede tests, to use as a starting point. Tests added to that file will be automatically added to the tester plpugin when the plugin is loaded, since the necesary code is already in the plugin class constructor.
+* A `tests` folder in the plugin folder, with the required structure to add tests for the Tester plugin. A `testerplugin.py` file is added, which contains sample unit and semi-automatede tests, to use as a starting point. Tests added to that file will be automatically added to the tester plugin when the plugin is loaded, since the necessary code is already in the plugin class constructor.
 
-* A `travis.yaml` file for Travis CI integration
+* A `travis.yml` file for Travis CI integration
 
 * A `pavement.py` file with the following tasks:
 
@@ -48,5 +44,5 @@ The created plugin template has the following elements
 
 	+ `package`. Creates a `package.zip` file with the content of the file, ready to be published. It includes dependencies as well, but it will not download them, so the `setup` task has to be run before packaging. Accepts a `test`or `-t` parameter, which indicates that tests should also bepackaged. By default, tests are not added.
 
-	
+
 
