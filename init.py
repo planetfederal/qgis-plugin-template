@@ -1,4 +1,5 @@
 import os
+import shutil
 
 def prompt(message, validate):
     res = None
@@ -39,10 +40,14 @@ def main ():
 	folder = os.path.dirname(os.path.realpath(__file__))
 	gitFolder = os.path.join(folder, ".git")
 	if os.path.exists(gitFolder):
-		shutil.rmtree(gitFolder)
+		try:
+			shutil.rmtree(gitFolder)
+		except:
+			pass
 	for root, dirs, files in os.walk(folder):
 	    for f in files:       
-			replaceInFiles(os.path.join(root, f), toReplace)
+	    	if ".git" not in root:
+				replaceInFiles(os.path.join(root, f), toReplace)
 	
 	os.rename(os.path.join(folder, "pluginname"), os.path.join(folder, pluginShortName))
 
