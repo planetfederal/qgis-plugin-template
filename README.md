@@ -38,7 +38,7 @@ The created plugin template has the following elements
 
 	+ `install`. Installs the plugin into the `~/.qgis2/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS. 
 
-	+ `install-dev`. Installs the plugin into the `~/.qgis-dev/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS. 
+	+ `installdev`. Installs the plugin into the `~/.qgis-dev/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS. 
 
 	+ `install3`. Installs the plugin into the `~/.qgis3/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS. 
 
