@@ -30,14 +30,6 @@ options(
         ]
     ),
 
-    # Default Server Params (can be overridden)
-    plugin_server = Bunch(
-        server = 'qgis.boundlessgeo.com',
-        port = 80,
-        protocol = 'http',
-        end_point = '/RPC2/'
-    ),
-
     sphinx = Bunch(
         docroot = 'doc',
         sourcedir = 'source',
