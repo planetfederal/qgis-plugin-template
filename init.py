@@ -1,5 +1,6 @@
 import os
 import shutil
+import subprocess
 from sys import argv
 
 def prompt(message, validate):
@@ -40,6 +41,8 @@ def main ():
 	toReplace = [("[pluginname]", pluginName), ("[pluginshortname]", pluginShortName), ("[pluginclassname]", pluginClassName)]
 	folder = os.path.dirname(os.path.realpath(__file__))
 	gitFolder = os.path.join(folder, ".git")
+	subprocess.call("git submodule init".split(" "))
+	subprocess.call("git submodule update".split(" "))
 	if os.path.exists(gitFolder):
 		try:
 			shutil.rmtree(gitFolder)
