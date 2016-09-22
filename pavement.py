@@ -30,9 +30,9 @@ options(
     ),
 
     sphinx = Bunch(
-        docroot = 'doc',
-        sourcedir = 'source',
-        builddir = 'build'
+        docroot = path('docs'),
+        sourcedir = path('docs/source'),
+        builddir = path('docs/build')
     )
 )
 
@@ -95,13 +95,13 @@ def installdev(options):
 def install3(options):
     _install(".qgis3")
 
-
 @task
 @cmdopts([
-    ('tests', 't', 'Package tests with plugin'),
+    ('tests', 't', 'Package tests with plugin')
 ])
 def package(options):
     '''create package for plugin'''
+    builddocs(options)
     package_file = options.plugin.package_dir / ('%s.zip' % options.plugin.name)
     with zipfile.ZipFile(package_file, "w", zipfile.ZIP_DEFLATED) as zip:
         if not hasattr(options.package, 'tests'):
@@ -128,6 +128,19 @@ def make_zip(zip, options):
             relpath = os.path.relpath(root, '.')
             zip.write(path(root) / f, path(relpath) / f)
         filter_excludes(dirs)
+
+    for root, dirs, files in os.walk(options.sphinx.builddir):
+        for f in files:
+            relpath = os.path.join(options.plugin.name, "docs", os.path.relpath(root, options.sphinx.builddir))
+            zipFile.write(path(root) / f, path(relpath) / f)
+ 
+
+@task
+def builddocs(options):
+    cwd = os.getcwd()
+    os.chdir(options.sphinx.docroot)
+    sh("make html")
+    os.chdir(cwd)
 
 
 @task
