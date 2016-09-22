@@ -26,7 +26,8 @@ class [pluginclassname]:
         self.helpAction = QAction(helpIcon, "[pluginname] Help", self.iface.mainWindow())
         self.helpAction.setObjectName("[pluginshortname]Help")
         self.helpAction.triggered.connect(lambda: webbrowser.open_new(
-                                          os.path.join(os.path.dirname(__file__), "docs", "html")))
+                        "file://" + os.path.join(os.path.dirname(__file__), "docs", "html", "index.html")))
+
 
     def run(self):
         pass
