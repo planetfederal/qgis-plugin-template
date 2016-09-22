@@ -16,6 +16,20 @@ class [pluginclassname]:
         except:
             pass            
 
+    def initGui(self):
+        icon = QIcon(os.path.dirname(__file__) + "[pluginshortname].png")
+        self.action = QAction(icon, "[pluginname]", self.iface.mainWindow())
+        self.action.setObjectName("start[pluginshortname]")
+        self.action.triggered.connect(self.run)
+
+        helpIcon = QgsApplication.getThemeIcon('/mActionHelpAPI.png')
+        self.helpAction = QAction(helpIcon, "[pluginname] Help", self.iface.mainWindow())
+        self.helpAction.setObjectName("[pluginshortname]Help")
+        self.helpAction.triggered.connect(lambda: webbrowser.open_new(
+                                          os.path.join(os.path.dirname(__file__), "docs", "html")))
+
+    def run(self):
+        pass
 
     def unload(self):
 
