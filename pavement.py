@@ -137,6 +137,8 @@ def make_zip(zip, options):
 
 @task
 def builddocs(options):
+    sh("git submodule init")
+    sh("git submodule update")    
     cwd = os.getcwd()
     os.chdir(options.sphinx.docroot)
     sh("make html")
