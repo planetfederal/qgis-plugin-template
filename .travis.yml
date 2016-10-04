@@ -43,7 +43,7 @@ install:
     # Build the plugin
     # Any additional build step should go here (or just after the next line)
     - docker exec -it qgis-testing-environment sh -c "pip install paver"
-    - docker exec -it qgis-testing-environment sh -c "cd /tests_directory && paver setup"
+    - docker exec -it qgis-testing-environment sh -c "cd /tests_directory tests_directory && paver setup && paver package --teststests_directory && paver setup paver setup tests_directory && paver setuptests_directory && paver setup paver package --tests"
     - docker exec -it qgis-testing-environment sh -c "ln -s /tests_directory/${PLUGIN_NAME} /root/.qgis2/python/plugins/${PLUGIN_NAME}"
 
 script:
@@ -51,3 +51,4 @@ script:
     # This plugin has not yet any unit tests
     - docker exec -it qgis-testing-environment sh -c "echo '${PLUGIN_NAME} has no unit tests yet, please create them and add here'"
 
+# Note: see any other active plugin for slack and automatic deployment configuration
