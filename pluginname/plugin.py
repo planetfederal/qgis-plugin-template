@@ -22,6 +22,9 @@ __copyright__ = '(C) [year] Boundless, http://boundlessgeo.com'
 
 # This will get replaced with a git SHA1 when you do a git archive
 
+from qgis.PyQt.QtGui import QIcon, QAction
+from qgis.core import QgsApplication
+import os
 
 class [pluginclassname]:
     def __init__(self, iface):
@@ -45,12 +48,14 @@ class [pluginclassname]:
         self.action = QAction(icon, "[pluginname]", self.iface.mainWindow())
         self.action.setObjectName("start[pluginshortname]")
         self.action.triggered.connect(self.run)
+        self.iface.addPluginToMenu("[pluginname]", self.action)
 
         helpIcon = QgsApplication.getThemeIcon('/mActionHelpAPI.png')
         self.helpAction = QAction(helpIcon, "[pluginname] Help", self.iface.mainWindow())
         self.helpAction.setObjectName("[pluginshortname]Help")
         self.helpAction.triggered.connect(lambda: webbrowser.open_new(
                         "file://" + os.path.join(os.path.dirname(__file__), "docs", "html", "index.html")))
+        self.iface.addPluginToMenu("[pluginname]", self.helpAction)
 
     def unload(self):
         try:
