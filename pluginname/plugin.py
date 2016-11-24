@@ -22,9 +22,13 @@ __copyright__ = '(C) [year] Boundless, http://boundlessgeo.com'
 
 # This will get replaced with a git SHA1 when you do a git archive
 
-from qgis.PyQt.QtGui import QIcon, QAction
-from qgis.core import QgsApplication
 import os
+import webbrowser
+
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAction
+
+from qgis.core import QgsApplication
 
 class [pluginclassname]:
     def __init__(self, iface):

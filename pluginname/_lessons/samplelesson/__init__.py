@@ -4,7 +4,7 @@
 # This code is licensed under the GPL 2.0 license.
 #
 from lessons.lesson import Step
-from lessons.utils import *
+from lessons import utils
 from qgis.utils import iface
 
 lesson = Lesson("Sample lesson")

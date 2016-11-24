@@ -1,8 +1,6 @@
 # Tests for the QGIS Tester plugin. To know more see
 # https://github.com/boundlessgeo/qgis-tester-plugin
 
-from qgis.utils import *
-from qgis.core import *
 import os
 import unittest
 
