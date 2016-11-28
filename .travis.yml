@@ -13,9 +13,9 @@ env:
     #- DOCKER_VERSION=1.12.0-0~trusty
     #- DOCKER_COMPOSE_VERSION=1.7.1
   matrix:
-    - QGIS_VERSION_TAG=release
-    - QGIS_VERSION_TAG=master_2
-    - QGIS_VERSION_TAG=master
+    - QGIS_VERSION_TAG=release PYTHON_EXECUTABLE=python PIP_EXECUTABLE=pip USERHOME=.qgis2
+    - QGIS_VERSION_TAG=master_2 PYTHON_EXECUTABLE=python PIP_EXECUTABLE=pip USERHOME=.qgis2
+    - QGIS_VERSION_TAG=master PYTHON_EXECUTABLE=python3 PIP_EXECUTABLE=pip3 USERHOME=.qgis2
 matrix:
   allow_failures:
     # Do not fail the entire build if it fails only on master
@@ -42,9 +42,9 @@ install:
 
     # Build the plugin
     # Any additional build step should go here (or just after the next line)
-    - docker exec -it qgis-testing-environment sh -c "pip install paver"
+    - docker exec -it qgis-testing-environment sh -c "$PIP_EXECUTABLE install paver"
     - docker exec -it qgis-testing-environment sh -c "cd /tests_directory tests_directory && paver setup && paver package --teststests_directory && paver setup paver setup tests_directory && paver setuptests_directory && paver setup paver package --tests"
-    - docker exec -it qgis-testing-environment sh -c "ln -s /tests_directory/${PLUGIN_NAME} /root/.qgis2/python/plugins/${PLUGIN_NAME}"
+    - docker exec -it qgis-testing-environment sh -c "ln -s /tests_directory/${PLUGIN_NAME} /root/$USERHOME/python/plugins/${PLUGIN_NAME}"
 
 script:
     # Run the unit tests

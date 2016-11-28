@@ -3,17 +3,16 @@
 # (c) 2016 Boundless, http://boundlessgeo.com
 # This code is licensed under the GPL 2.0 license.
 #
-from cStringIO import StringIO
-import ConfigParser
-from datetime import date, datetime
-import fnmatch
+
 import os
-from paver.easy import *
-# this pulls in the sphinx target
-from paver.doctools import html
-import xmlrpclib
-import zipfile
+import fnmatch
 import shutil
+import zipfile
+
+# this pulls in the sphinx target
+from paver.easy import *
+from paver.doctools import html
+
 
 options(
     plugin = Bunch(
@@ -133,12 +132,12 @@ def make_zip(zip, options):
         for f in files:
             relpath = os.path.join(options.plugin.name, "docs", os.path.relpath(root, options.sphinx.builddir))
             zipFile.write(path(root) / f, path(relpath) / f)
- 
+
 
 @task
 def builddocs(options):
     sh("git submodule init")
-    sh("git submodule update")    
+    sh("git submodule update")
     cwd = os.getcwd()
     os.chdir(options.sphinx.docroot)
     sh("make html")
