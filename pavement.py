@@ -36,7 +36,6 @@ options(
 )
 
 
-
 @task
 @cmdopts([
     ('clean', 'c', 'clean out dependencies first'),
@@ -50,12 +49,20 @@ def setup(options):
         ext_libs.rmtree()
     ext_libs.makedirs()
     runtime, test = read_requirements()
+
+    try:
+        import pip
+    except:
+        error('FATAL: Unable to import pip, please install it first!')
+        sys.exit(1)
+
     os.environ['PYTHONPATH']=ext_libs.abspath()
     for req in runtime + test:
-        sh('easy_install -a -d %(ext_libs)s %(dep)s' % {
-            'ext_libs' : ext_libs.abspath(),
-            'dep' : req
-        })
+        pip.main(['install',
+                  '-t',
+                  ext_libs.abspath(),
+                  req])
+
 
 def read_requirements():
     '''return a list of runtime and list of test requirements'''
