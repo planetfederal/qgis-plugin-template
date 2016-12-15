@@ -7,48 +7,42 @@ services:
     - docker
 env:
   global:
-    # The plugin basename (the name of the main folder that contains the plugin source code)
-    - PLUGIN_NAME=[pluginshortname]
-    # If the build needs docker compose:
-    #- DOCKER_VERSION=1.12.0-0~trusty
-    #- DOCKER_COMPOSE_VERSION=1.7.1
+  # The plugin basename (the name of the main folder that contains the plugin source code)
+  - PLUGIN_NAME=[pluginshortname]
+  # If the build needs docker compose:
+  #- DOCKER_VERSION=1.12.0-0~trusty
+  #- DOCKER_COMPOSE_VERSION=1.7.1
   matrix:
-    - QGIS_VERSION_TAG=release PYTHON_EXECUTABLE=python PIP_EXECUTABLE=pip USERHOME=.qgis2
-    - QGIS_VERSION_TAG=master_2 PYTHON_EXECUTABLE=python PIP_EXECUTABLE=pip USERHOME=.qgis2
-    - QGIS_VERSION_TAG=master PYTHON_EXECUTABLE=python3 PIP_EXECUTABLE=pip3 USERHOME=.qgis2
+  - QGIS_VERSION_TAG=release PYTHON_EXECUTABLE=python PIP_EXECUTABLE=pip
+  - QGIS_VERSION_TAG=master_2 PYTHON_EXECUTABLE=python PIP_EXECUTABLE=pip
+  - QGIS_VERSION_TAG=master PYTHON_EXECUTABLE=python3 PIP_EXECUTABLE=pip3
 matrix:
   allow_failures:
-    # Do not fail the entire build if it fails only on master
-    - env: QGIS_VERSION_TAG=master
+  # Do not fail the entire build if it fails only on master
+  - env: QGIS_VERSION_TAG=master PYTHON_EXECUTABLE=python3 PIP_EXECUTABLE=pip3
 before_install:
-    - docker pull boundlessgeo/qgis-testing-environment:${QGIS_VERSION_TAG}
-    - docker tag boundlessgeo/qgis-testing-environment:${QGIS_VERSION_TAG} qgis-testing-environment
+- docker pull boundlessgeo/qgis-testing-environment:${QGIS_VERSION_TAG}
+- docker tag boundlessgeo/qgis-testing-environment:${QGIS_VERSION_TAG} qgis-testing-environment
 install:
-    # If the build needs docker compose:
-    #- apt-cache madison docker-engine
-    #- sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
-    #- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-    #- chmod +x docker-compose
-    #- sudo mv docker-compose /usr/local/bin
-    #- docker-compose up -d
-    #- docker-compose ps
+# If the build needs docker compose:
+#- apt-cache madison docker-engine
+#- sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
+#- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+#- chmod +x docker-compose
+#- sudo mv docker-compose /usr/local/bin
+#- docker-compose up -d
+#- docker-compose ps
 
-    # Standard docker (no-compose):
-    - docker run -d --name qgis-testing-environment -v ${TRAVIS_BUILD_DIR}:/tests_directory -e DISPLAY=:99 qgis-testing-environment
-    - sleep 10
-
-    # Setup QGIS to avoid modals and install test auth db
-    - docker exec -it qgis-testing-environment sh -c "qgis_setup.sh ${PLUGIN_NAME}"
-
-    # Build the plugin
-    # Any additional build step should go here (or just after the next line)
-    - docker exec -it qgis-testing-environment sh -c "$PIP_EXECUTABLE install paver"
-    - docker exec -it qgis-testing-environment sh -c "cd /tests_directory tests_directory && paver setup && paver package --teststests_directory && paver setup paver setup tests_directory && paver setuptests_directory && paver setup paver package --tests"
-    - docker exec -it qgis-testing-environment sh -c "ln -s /tests_directory/${PLUGIN_NAME} /root/$USERHOME/python/plugins/${PLUGIN_NAME}"
-
+# Standard docker (no-compose):
+- docker run -d --name qgis-testing-environment -v ${TRAVIS_BUILD_DIR}:/tests_directory -e DISPLAY=:99 qgis-testing-environment
+- sleep 10
+- docker exec -it qgis-testing-environment sh -c "qgis_setup.sh ${PLUGIN_NAME}"
+- docker exec -it qgis-testing-environment sh -c "$PIP_EXECUTABLE install paver"
 script:
-    # Run the unit tests
-    # This plugin has not yet any unit tests
-    - docker exec -it qgis-testing-environment sh -c "echo '${PLUGIN_NAME} has no unit tests yet, please create them and add here'"
-
+- docker exec -it qgis-testing-environment sh -c "cd /tests_directory && paver setup && paver package --tests"
+- docker exec -it qgis-testing-environment sh -c "qgis_testrunner.sh ${PLUGIN_NAME}.tests.testerplugin.run_tests"
+script:
+# Run the unit tests
+# This plugin has not yet any unit tests
+- docker exec -it qgis-testing-environment sh -c "echo '${PLUGIN_NAME} has no unit tests yet, please create them and add here'"
 # Note: see any other active plugin for slack and automatic deployment configuration
