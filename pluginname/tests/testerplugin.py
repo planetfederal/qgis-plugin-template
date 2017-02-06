@@ -34,7 +34,7 @@ class [pluginclassname]Test(unittest.TestCase):
 
 def pluginSuite():
     suite = unittest.TestSuite()
-    suite.addTests(unittest.makeSuite(MilStd2525Test, 'test'))
+    suite.addTests(unittest.makeSuite([pluginclassname]Test, 'test'))
     return suite
 
 def unitTests():
