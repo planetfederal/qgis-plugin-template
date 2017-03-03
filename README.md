@@ -30,6 +30,8 @@ The created plugin template has the following elements
 
 * A `tests` folder in the plugin folder, with the required structure to add tests for the Tester plugin. A `testerplugin.py` file is added, which contains sample unit and semi-automatede tests, to use as a starting point. Tests added to that file will be automatically added to the tester plugin when the plugin is loaded, since the necessary code is already in the plugin class constructor.
 
+* If the option to add a QGIS commons library is selected when running the init script, a folder named `qgiscommons` will be added to the plugin folder, containing the commons library
+
 * A `travis.yml` file for Travis CI integration
 
 * A `pavement.py` file with the following tasks:
