@@ -24,7 +24,6 @@ def removeInvalidChars(s):
     s = ''.join(c for c in s if c in validChars)
     return s
 
-
 def className(s):
     return removeInvalidChars(s.title())
 
@@ -49,12 +48,28 @@ def main():
     pluginClassName = (prompt("Plugin class name [Leave empty to use '%s']: " % defaultClassName,
 							lambda s: s == removeInvalidChars(s)) or defaultClassName)
 
-    addCommons = prompt("add commons library?[Y/n]:", lambda s: s.lower() in ["y", "n", ""]).lower() in ["y", ""]
+    addCommons = prompt("Add commons library?[Y/n]:", lambda s: s.lower() in ["y", "n", ""]).lower() in ["y", ""]
 
     authorName = prompt('Plugin author: ', lambda v : bool(v.strip()))
     d = datetime.date.today()
     year = str(d.year)
     month = d.strftime('%B')
+
+    if addCommons:
+        commons = '''
+    tmpCommonsPath = path(__file__).dirname() / "qgiscommons"
+    dst = ext_libs / "qgiscommons"
+    if dst.exists():
+        dst.rmtree()
+    r = requests.get("https://github.com/boundlessgeo/lib-qgis-commons/archive/master.zip", stream=True)
+    z = zipfile.ZipFile(StringIO.StringIO(r.content))
+    z.extractall(path=tmpCommonsPath.abspath())
+    src = tmpCommonsPath / "lib-qgis-commons-master" / "qgiscommons"
+    src.copytree(src, dst.abspath())
+    tmpCommonsPath.rmtree()
+    '''
+    else:
+        commons = ""
 
     toReplace = [('[pluginname]', pluginName),
                  ('[pluginshortname]', pluginShortName),
@@ -62,6 +77,7 @@ def main():
                  ('[month]', month),
                  ('[year]', year),
                  ('[authorname]', authorName),
+                 ('[commons]', commons)
                 ]
 
     folder = os.path.dirname(os.path.realpath(__file__))
@@ -86,19 +102,6 @@ def main():
 
         os.remove(argv[0])
         os.remove(os.path.join(folder, 'console.png'))
-
-    if addCommons:        
-        tmpCommonsPath = os.path.join(folder, "qgiscommons")
-        dst = os.path.join(folder, pluginShortName, "qgiscommons")
-        if os.path.exists(dst):
-            shutil.rmtree(dst)
-        r = requests.get("https://github.com/boundlessgeo/lib-qgis-commons/archive/master.zip", stream=True)
-        z = zipfile.ZipFile(StringIO.StringIO(r.content))
-        z.extractall(path=tmpCommonsPath)
-        src = os.path.join(tmpCommonsPath, "lib-qgis-commons-master", "qgiscommons")
-        shutil.copytree(src, dst)
-        shutil.rmtree(tmpCommonsPath)
-
 
 if __name__ == '__main__':
     main()

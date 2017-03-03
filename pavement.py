@@ -50,6 +50,8 @@ def setup(options):
     ext_libs.makedirs()
     runtime, test = read_requirements()
 
+    [commons]
+    
     try:
         import pip
     except:
