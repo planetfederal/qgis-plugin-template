@@ -5,7 +5,9 @@ import shutil
 import datetime
 import subprocess
 from sys import argv
-
+import zipfile
+import StringIO
+import requests
 
 def prompt(message, validate):
     res = None
@@ -47,6 +49,8 @@ def main():
     pluginClassName = (prompt("Plugin class name [Leave empty to use '%s']: " % defaultClassName,
 							lambda s: s == removeInvalidChars(s)) or defaultClassName)
 
+    addCommons = prompt("add commons library?[Y/n]:", lambda s: s.lower() in ["y", "n", ""]).lower() in ["y", ""]
+
     authorName = prompt('Plugin author: ', lambda v : bool(v.strip()))
     d = datetime.date.today()
     year = str(d.year)
@@ -82,6 +86,18 @@ def main():
 
         os.remove(argv[0])
         os.remove(os.path.join(folder, 'console.png'))
+
+    if addCommons:        
+        tmpCommonsPath = os.path.join(folder, "qgiscommons")
+        dst = os.path.join(folder, pluginShortName, "qgiscommons")
+        if os.path.exists(dst):
+            shutil.rmtree(dst)
+        r = requests.get("https://github.com/boundlessgeo/lib-qgis-commons/archive/master.zip", stream=True)
+        z = zipfile.ZipFile(StringIO.StringIO(r.content))
+        z.extractall(path=tmpCommonsPath)
+        src = os.path.join(tmpCommonsPath, "lib-qgis-commons-master", "qgiscommons")
+        shutil.copytree(src, dst)
+        shutil.rmtree(tmpCommonsPath)
 
 
 if __name__ == '__main__':
