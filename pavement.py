@@ -8,6 +8,8 @@ import os
 import fnmatch
 import shutil
 import zipfile
+import StringIO
+import requests
 
 # this pulls in the sphinx target
 from paver.easy import *

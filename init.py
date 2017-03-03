@@ -65,7 +65,7 @@ def main():
     z = zipfile.ZipFile(StringIO.StringIO(r.content))
     z.extractall(path=tmpCommonsPath.abspath())
     src = tmpCommonsPath / "lib-qgis-commons-master" / "qgiscommons"
-    src.copytree(src, dst.abspath())
+    src.copytree(dst.abspath())
     tmpCommonsPath.rmtree()
     '''
     else:
