@@ -1,6 +1,21 @@
 [
-{"name":"mysetting",
- "description": "A setting to customize my plugin",
- "type": "string",
- "default": "dummy string"
-	}]
+	{"name":"mysetting",
+	 "description": "A setting to customize my plugin",
+	 "type": "string",
+	 "default": "dummy string",
+	 "group": "Group 1"
+	},
+	{"name":"anothersetting",
+	 "description": "Another setting to customize my plugin",
+	 "type": "number",
+	 "default": 0,
+	 "group": "Group 2"
+	},
+	{"name":"achoicesetting",
+	 "description": "A setting to select from a set of possible options",
+	 "type": "choice",
+	 "default": "option 1",
+	 "options":["option 1", "option 2", "option 3"],
+	 "group": "Group 2"
+	}
+]
