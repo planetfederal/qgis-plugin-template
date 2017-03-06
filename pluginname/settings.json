@@ -1,0 +1,6 @@
+[
+{"name":"mysetting",
+ "description": "A setting to customize my plugin",
+ "type": "string",
+ "default": "dummy string"
+	}]
