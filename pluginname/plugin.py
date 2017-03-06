@@ -30,7 +30,7 @@ from qgis.PyQt.QtWidgets import QAction
 
 from qgis.core import QgsApplication
 
-from .qgiscommons.settings import open_settings_dialog, read_settings
+from qgiscommons.settings import addSettingsMenu, readSettings
 
 class [pluginclassname]:
     def __init__(self, iface):
@@ -49,7 +49,7 @@ class [pluginclassname]:
         except:
             pass
 
-        read_settings()
+        readSettings()
 
     def initGui(self):
         icon = QIcon(os.path.dirname(__file__) + "[pluginshortname].png")
@@ -64,12 +64,8 @@ class [pluginclassname]:
         self.helpAction.triggered.connect(lambda: webbrowser.open_new(
                         "file://" + os.path.join(os.path.dirname(__file__), "docs", "html", "index.html")))
         self.iface.addPluginToMenu("[pluginname]", self.helpAction)
-
-        settingsIcon = QgsApplication.getThemeIcon('/mActionHelpAPI.png')
-        self.settingsAction = QAction(helpIcon, "[pluginname] Settings", self.iface.mainWindow())
-        self.settingsAction.setObjectName("[pluginshortname]Settings")
-        self.settingsAction.triggered.connect(open_settings_dialog)
-        self.iface.addPluginToMenu("[pluginname]", self.settingsAction)
+        
+        addSettingsMenu("[pluginname]")
 
     def unload(self):
         try:
