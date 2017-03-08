@@ -43,10 +43,10 @@ def main():
     pluginName = prompt('Plugin name: ', lambda v : bool(v.strip()))
     defaultShortName = removeInvalidChars(pluginName).lower()
     pluginShortName = (prompt("Plugin short name (no blank spaces allowed) [Leave empty to use '%s']: "
-							% defaultShortName, lambda s: s == removeInvalidChars(s)) or defaultShortName)
+                            % defaultShortName, lambda s: s == removeInvalidChars(s)) or defaultShortName)
     defaultClassName = className(pluginName)
     pluginClassName = (prompt("Plugin class name [Leave empty to use '%s']: " % defaultClassName,
-							lambda s: s == removeInvalidChars(s)) or defaultClassName)
+                            lambda s: s == removeInvalidChars(s)) or defaultClassName)
 
     addCommons = prompt("Add commons library?[Y/n]:", lambda s: s.lower() in ["y", "n", ""]).lower() in ["y", ""]
 
@@ -86,22 +86,21 @@ def main():
     subprocess.call('git submodule update'.split(' '))
     if os.path.exists(gitFolder):
         try:
-	    shutil.rmtree(gitFolder)
+            shutil.rmtree(gitFolder)
         except:
             pass
 
         for root, dirs, files in os.walk(folder):
-	    for f in files:
+            for f in files:
                 if '.git' not in root:
-		    replaceInFiles(os.path.join(root, f), toReplace)
+                    replaceInFiles(os.path.join(root, f), toReplace)
 
         os.rename(os.path.join(folder, 'pluginname'), os.path.join(folder, pluginShortName))
-
-        with open(os.path.join(folder, 'README.md'), 'w') as f:
-	    f.write('#' + pluginName)
+        os.rename(os.path.join(folder, '_readme.rst'), os.path.join(folder, "README.rst"))
 
         os.remove(argv[0])
         os.remove(os.path.join(folder, 'console.png'))
+        os.remove(os.path.join(folder, 'README.md'))
 
 if __name__ == '__main__':
     main()

@@ -46,5 +46,7 @@ The created plugin template has the following elements
 
 	+ `package`. Creates a `package.zip` file with the content of the file, ready to be published. It includes dependencies as well, but it will not download them, so the `setup` task has to be run before packaging. Accepts a `test`or `-t` parameter, which indicates that tests should also bepackaged. By default, tests are not added.
 
+* A `README.rst` file with instructions on how to install the plugin.
+
 
 
