@@ -57,9 +57,10 @@ class [pluginclassname]:
         self.action.setObjectName("start[pluginshortname]")
         self.action.triggered.connect(self.run)
         self.iface.addPluginToMenu("[pluginname]", self.action)
+        self.iface.addToolBarIcon(self.action)
 
         helpIcon = QgsApplication.getThemeIcon('/mActionHelpAPI.png')
-        self.helpAction = QAction(helpIcon, "[pluginname] Help", self.iface.mainWindow())
+        self.helpAction = QAction(helpIcon, "Help...", self.iface.mainWindow())
         self.helpAction.setObjectName("[pluginshortname]Help")
         self.helpAction.triggered.connect(lambda: webbrowser.open_new(
                         "file://" + os.path.join(os.path.dirname(__file__), "docs", "html", "index.html")))
@@ -74,6 +75,10 @@ class [pluginclassname]:
             removeTestModule(testerplugin, "[pluginname]")
         except:
             pass
+
+        self.iface.removePluginWebMenu("[pluginname]", self.action)
+        self.iface.removeToolBarIcon("[pluginname]")        
+        removeSettingsMenu()
 
     def run(self):
         pass
