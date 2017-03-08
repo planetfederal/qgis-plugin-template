@@ -4,7 +4,7 @@
 [pluginname] QGIS Plugin's documentation
 ========================================
 
-<Small plugin description>
+<Short plugin description>
 
 Documentation contents:
 
@@ -13,4 +13,4 @@ Documentation contents:
 
    installation
    usage
-   sysadmin
+   settingsconf
