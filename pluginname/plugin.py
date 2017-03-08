@@ -30,7 +30,7 @@ from qgis.PyQt.QtWidgets import QAction
 
 from qgis.core import QgsApplication
 
-from qgiscommons.settings import addSettingsMenu, readSettings
+from qgiscommons.settings import addSettingsMenu, removeSettingsMenu, addAboutMenu, removeAboutMenu, readSettings
 
 class [pluginclassname]:
     def __init__(self, iface):
@@ -67,6 +67,7 @@ class [pluginclassname]:
         self.iface.addPluginToMenu("[pluginname]", self.helpAction)
         
         addSettingsMenu("[pluginname]")
+        addAboutMenu("[pluginname]")
 
     def unload(self):
         try:
@@ -79,6 +80,7 @@ class [pluginclassname]:
         self.iface.removePluginWebMenu("[pluginname]", self.action)
         self.iface.removeToolBarIcon("[pluginname]")        
         removeSettingsMenu()
+        removeAboutMenu()
 
     def run(self):
         pass
