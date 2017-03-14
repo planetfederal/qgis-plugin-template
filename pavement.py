@@ -115,13 +115,13 @@ def package(options):
     '''create package for plugin'''
     builddocs(options)
     package_file = options.plugin.package_dir / ('%s.zip' % options.plugin.name)
-    with zipfile.ZipFile(package_file, "w", zipfile.ZIP_DEFLATED) as zip:
+    with zipfile.ZipFile(package_file, "w", zipfile.ZIP_DEFLATED) as f:
         if not hasattr(options.package, 'tests'):
             options.plugin.excludes.extend(options.plugin.tests)
-        make_zip(zip, options)
+        make_zip(f, options)
 
 
-def make_zip(zip, options):
+def make_zip(zipFile, options):
     excludes = set(options.plugin.excludes)
 
     src_dir = options.plugin.source_dir
@@ -138,7 +138,7 @@ def make_zip(zip, options):
     for root, dirs, files in os.walk(src_dir):
         for f in filter_excludes(files):
             relpath = os.path.relpath(root, '.')
-            zip.write(path(root) / f, path(relpath) / f)
+            zipFile.write(path(root) / f, path(relpath) / f)
         filter_excludes(dirs)
 
     for root, dirs, files in os.walk(options.sphinx.builddir):
