@@ -10,6 +10,7 @@ try:
 except:
     pass
 
+
 def functionalTests():
     try:
         from qgistester.test import Test
@@ -41,3 +42,8 @@ def unitTests():
     _tests = []
     _tests.extend(pluginSuite())
     return _tests
+
+# run all tests, this function is automatically called by the travis CI
+# from the qgis-testing-environment-docker system
+def run_all():
+    unittest.TextTestRunner(verbosity=3, stream=sys.stdout).run(pluginSuite())

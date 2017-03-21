@@ -1,6 +1,6 @@
 [general]
 name=[pluginname]
-description=
+description=This field cannot be blank! Insert your plugin description here.
 about=<p></p>
 category=Plugins
 qgisMinimumVersion=2.0
