@@ -79,8 +79,8 @@ class [pluginclassname]:
 
         self.iface.removePluginWebMenu("[pluginname]", self.action)
         self.iface.removeToolBarIcon(self.action)        
-        removeSettingsMenu()
-        removeAboutMenu()
+        removeSettingsMenu("[pluginname]")
+        removeAboutMenu("[pluginname]")
 
     def run(self):
         pass
