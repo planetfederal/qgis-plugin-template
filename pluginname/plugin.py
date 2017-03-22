@@ -78,7 +78,7 @@ class [pluginclassname]:
             pass
 
         self.iface.removePluginWebMenu("[pluginname]", self.action)
-        self.iface.removeToolBarIcon("[pluginname]")        
+        self.iface.removeToolBarIcon(self.action)        
         removeSettingsMenu()
         removeAboutMenu()
 
