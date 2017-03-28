@@ -65,7 +65,7 @@ class [pluginclassname]:
         self.helpAction.triggered.connect(lambda: webbrowser.open_new(
                         "file://" + os.path.join(os.path.dirname(__file__), "docs", "html", "index.html")))
         self.iface.addPluginToMenu("[pluginname]", self.helpAction)
-        
+
         addSettingsMenu("[pluginname]")
         addAboutMenu("[pluginname]")
 
@@ -77,8 +77,15 @@ class [pluginclassname]:
         except:
             pass
 
+        try:
+            from lessons import removeLessonsFolder
+            folder = os.path.join(os.path.dirname(__file__), "_lessons")
+            removeLessonsFolder(folder)
+        except:
+            pass
+
         self.iface.removePluginWebMenu("[pluginname]", self.action)
-        self.iface.removeToolBarIcon(self.action)        
+        self.iface.removeToolBarIcon(self.action)
         removeSettingsMenu("[pluginname]")
         removeAboutMenu("[pluginname]")
 
