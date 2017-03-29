@@ -22,7 +22,7 @@ def functionalTests():
         pass
 
     sampleTest = Test("Sample test")
-    sampleTest.addStep("Sample step", _sampleMethod)
+    sampleTest.addStep("Sample step", sampleMethod)
 
     return [sampleTest]
 
