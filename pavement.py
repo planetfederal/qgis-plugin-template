@@ -144,7 +144,7 @@ def make_zip(zipFile, options):
     for root, dirs, files in os.walk(options.sphinx.builddir):
         for f in files:
             relpath = os.path.join(options.plugin.name, "docs", os.path.relpath(root, options.sphinx.builddir))
-            zip.write(path(root) / f, path(relpath) / f)
+            zipFile.write(path(root) / f, path(relpath) / f)
 
 def create_settings_docs(options):
     settings_file = path(options.plugin.name) / "settings.json"
