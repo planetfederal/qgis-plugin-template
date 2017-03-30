@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Boundless specific
+travis_secrets.tar.gz
+
 # C extensions
 *.so
 
