@@ -45,7 +45,7 @@ class [pluginclassname]:
         try:
             from lessons import addLessonsFolder
             folder = os.path.join(os.path.dirname(__file__), "_lessons")
-            addLessonsFolder(folder)
+            addLessonsFolder(folder, "[pluginshortname]")
         except:
             pass
 
