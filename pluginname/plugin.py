@@ -42,13 +42,6 @@ class [pluginclassname]:
         except:
             pass
 
-        try:
-            from lessons import addLessonsFolder
-            folder = os.path.join(os.path.dirname(__file__), "_lessons")
-            addLessonsFolder(folder, "[pluginshortname]")
-        except:
-            pass
-
         readSettings()
 
     def initGui(self):
@@ -68,6 +61,13 @@ class [pluginclassname]:
 
         addSettingsMenu("[pluginname]")
         addAboutMenu("[pluginname]")
+
+        try:
+            from lessons import addLessonsFolder
+            folder = os.path.join(os.path.dirname(__file__), "_lessons")
+            addLessonsFolder(folder, "[pluginshortname]")
+        except:
+            pass
 
     def unload(self):
         try:
