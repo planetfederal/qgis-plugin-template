@@ -49,6 +49,7 @@ def main():
                             lambda s: s == removeInvalidChars(s)) or defaultClassName)
 
     addCommons = prompt("Add commons library?[Y/n]:", lambda s: s.lower() in ["y", "n", ""]).lower() in ["y", ""]
+    addBoundlessCommons = prompt("Add Boundless commons library?[Y/n]:", lambda s: s.lower() in ["y", "n", ""]).lower() in ["y", ""]
 
     authorName = prompt('Plugin author: ', lambda v : bool(v.strip()))
     d = datetime.date.today()
@@ -71,13 +72,31 @@ def main():
     else:
         commons = ""
 
+    if addBoundlessCommons:
+        boundlessCommons = '''
+    tmpCommonsPath = path(__file__).dirname() / "boundlesscommons"
+    dst = ext_libs / "boundlesscommons"
+    if dst.exists():
+        dst.rmtree()
+    r = requests.get("https://github.com/boundlessgeo/lib-qgis-boundless-commons/archive/master.zip", stream=True)
+    z = zipfile.ZipFile(StringIO.StringIO(r.content))
+    z.extractall(path=tmpCommonsPath.abspath())
+    src = tmpCommonsPath / "lib-qgis-boundless-commons-master" / "boundlesscommons"
+    src.copytree(dst.abspath())
+    tmpCommonsPath.rmtree()
+    '''
+    else:
+        boundlessCommons = ""
+
+
     toReplace = [('[pluginname]', pluginName),
                  ('[pluginshortname]', pluginShortName),
                  ('[pluginclassname]', pluginClassName),
                  ('[month]', month),
                  ('[year]', year),
                  ('[authorname]', authorName),
-                 ('[commons]', commons)
+                 ('[commons]', commons),
+                 ('[boundlessCommons]', boundlessCommons),
                 ]
 
     folder = os.path.dirname(os.path.realpath(__file__))

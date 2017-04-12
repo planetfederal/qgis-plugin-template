@@ -55,7 +55,9 @@ def setup(options):
     runtime, test = read_requirements()
 
     [commons]
-    
+
+    [boundlessCommons]
+
     try:
         import pip
     except:
@@ -157,7 +159,7 @@ def create_settings_docs(options):
         grouped[setting["group"]].append(setting)
     with open (doc_file, "w") as f:
         f.write("Plugin settings\n###############\n\nThe plugin can be adjusted using the following settings, to be found in its settings dialog:\n")
-        for groupName, group in grouped.iteritems():        
+        for groupName, group in grouped.iteritems():
             f.write("\n* %s \n" % groupName)
             for setting in group:
                 f.write("\t - *%s*: %s\n\n" % (setting["label"], setting["description"]))

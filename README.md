@@ -22,7 +22,7 @@ Notice that, since the script modifies the template files in place, once you run
 
 The created plugin template has the following elements
 
-* An empty plugin class (`plugin.py` in the folder named with the short name of your plugin). 
+* An empty plugin class (`plugin.py` in the folder named with the short name of your plugin).
 
 * A `docs`folder with a Sphinx project. Edit the `docs/source/index.rst` file to add content. By default, t contains a single input file, `intro.rst`, which is empty.
 
@@ -32,19 +32,21 @@ The created plugin template has the following elements
 
 * If the option to add a QGIS commons library is selected when running the init script, a folder named `qgiscommons` will be added to the plugin folder, containing the commons library
 
+* If the option to add a Boundless commons library is selected when running the init script, a folder named `boundlesscommons` will be added to the plugin folder, containing the Boundless commons library
+
 * A `travis.yml` file for Travis CI integration
 
 * A `pavement.py` file with the following tasks:
 
-	+ `setup`. Downloads and installs the required dependenciesfor the plugin  in the `ext-libs` folder. This folder is added to the PYTHONPATH by default by the plugin itself. The list of dependencies should be in the `requirements.txt` file, listing the PyPI names of the libraries, one per line.
+    + `setup`. Downloads and installs the required dependenciesfor the plugin  in the `ext-libs` folder. This folder is added to the PYTHONPATH by default by the plugin itself. The list of dependencies should be in the `requirements.txt` file, listing the PyPI names of the libraries, one per line.
 
-	+ `install`. Installs the plugin into the `~/.qgis2/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS. 
+    + `install`. Installs the plugin into the `~/.qgis2/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
 
-	+ `installdev`. Installs the plugin into the `~/.qgis-dev/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS. 
+    + `installdev`. Installs the plugin into the `~/.qgis-dev/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
 
-	+ `install3`. Installs the plugin into the `~/.qgis3/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS. 
+    + `install3`. Installs the plugin into the `~/.qgis3/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
 
-	+ `package`. Creates a `package.zip` file with the content of the file, ready to be published. It includes dependencies as well, but it will not download them, so the `setup` task has to be run before packaging. Accepts a `test`or `-t` parameter, which indicates that tests should also bepackaged. By default, tests are not added.
+    + `package`. Creates a `package.zip` file with the content of the file, ready to be published. It includes dependencies as well, but it will not download them, so the `setup` task has to be run before packaging. Accepts a `test`or `-t` parameter, which indicates that tests should also bepackaged. By default, tests are not added.
 
 * A `README.rst` file with instructions on how to install the plugin.
 
