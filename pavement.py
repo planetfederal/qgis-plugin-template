@@ -20,10 +20,10 @@ from paver.doctools import html
 
 options(
     plugin = Bunch(
-        name = '[pluginshortname]',
-        ext_libs = path('[pluginshortname]/ext-libs'),
-        ext_src = path('[pluginshortname]/ext-src'),
-        source_dir = path('[pluginshortname]'),
+        name = 'boundlessbasemaps',
+        ext_libs = path('boundlessbasemaps/ext-libs'),
+        ext_src = path('boundlessbasemaps/ext-src'),
+        source_dir = path('boundlessbasemaps'),
         package_dir = path('.'),
         tests = ['test', 'tests'],
         excludes = [
@@ -54,9 +54,16 @@ def setup(options):
     ext_libs.makedirs()
     runtime, test = read_requirements()
 
-    [commons]
-
-    [boundlessCommons]
+    tmpCommonsPath = path(__file__).dirname() / "qgiscommons"
+    dst = ext_libs / "qgiscommons"
+    if dst.exists():
+        dst.rmtree()
+    r = requests.get("https://github.com/boundlessgeo/lib-qgis-commons/archive/master.zip", stream=True)
+    z = zipfile.ZipFile(StringIO.StringIO(r.content))
+    z.extractall(path=tmpCommonsPath.abspath())
+    src = tmpCommonsPath / "lib-qgis-commons-master" / "qgiscommons"
+    src.copytree(dst.abspath())
+    tmpCommonsPath.rmtree()
 
     try:
         import pip
@@ -64,7 +71,7 @@ def setup(options):
         error('FATAL: Unable to import pip, please install it first!')
         sys.exit(1)
 
-    os.environ['PYTHONPATH']=ext_libs.abspath()
+    os.environ['PYTHONPATH'] = ext_libs.abspath()
     for req in runtime + test:
         pip.main(['install',
                   '-t',
@@ -75,7 +82,7 @@ def setup(options):
 def read_requirements():
     '''return a list of runtime and list of test requirements'''
     lines = open('requirements.txt').readlines()
-    lines = [ l for l in [ l.strip() for l in lines] if l ]
+    lines = [l for l in [l.strip() for l in lines] if l]
     divider = '# test requirements'
     try:
         idx = lines.index(divider)
@@ -84,7 +91,8 @@ def read_requirements():
     not_comments = lambda s,e: [ l for l in lines[s:e] if l[0] != '#']
     return not_comments(0, idx), not_comments(idx+1, None)
 
-def _install(folder):
+
+def _install(folder, options):
     '''install plugin to qgis'''
     plugin_name = options.plugin.name
     src = path(__file__).dirname() / plugin_name
@@ -96,6 +104,15 @@ def _install(folder):
         src.copytree(dst)
     elif not dst.exists():
         src.symlink(dst)
+        # Symlink the build folder to the parent
+        docs = path('..') / '..' / "docs" / 'build' / 'html'
+        docs_dest = path(__file__).dirname() / plugin_name / "docs"
+        docs_link = docs_dest / 'html'
+        if not docs_dest.exists():
+            docs_dest.mkdir()
+        if not docs_link.islink():
+            docs.symlink(docs_link)
+
 
 @task
 def install(options):
