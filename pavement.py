@@ -20,10 +20,10 @@ from paver.doctools import html
 
 options(
     plugin = Bunch(
-        name = 'boundlessbasemaps',
-        ext_libs = path('boundlessbasemaps/ext-libs'),
-        ext_src = path('boundlessbasemaps/ext-src'),
-        source_dir = path('boundlessbasemaps'),
+        name = '[pluginshortname]',
+        ext_libs = path('[pluginshortname]/ext-libs'),
+        ext_src = path('[pluginshortname]/ext-src'),
+        source_dir = path('[pluginshortname]'),
         package_dir = path('.'),
         tests = ['test', 'tests'],
         excludes = [
@@ -175,11 +175,24 @@ def create_settings_docs(options):
     for setting in settings:
         grouped[setting["group"]].append(setting)
     with open (doc_file, "w") as f:
-        f.write("Plugin settings\n###############\n\nThe plugin can be adjusted using the following settings, to be found in its settings dialog:\n")
+        f.write("Plugin settings\n===============\n\n"
+                "The plugin can be adjusted using the following settings, "
+                "to be found in its settings dialog.\n")
         for groupName, group in grouped.iteritems():
-            f.write("\n* %s \n" % groupName)
+            section_marks = "-" * len(groupName)
+            f.write("\n%s\n%s\n\n"
+                    ".. list-table::\n"
+                    "   :header-rows: 1\n"
+                    "   :stub-columns: 1\n"
+                    "   :widths: 20 80\n"
+                    "   :class: non-responsive\n\n"
+                    "   * - Option\n"
+                    "     - Description\n"
+                    % (groupName, section_marks))
             for setting in group:
-                f.write("\t - *%s*: %s\n\n" % (setting["label"], setting["description"]))
+                f.write("   * - %s\n"
+                        "     - %s\n"
+                        % (setting["label"], setting["description"]))
 
 @task
 def builddocs(options):
