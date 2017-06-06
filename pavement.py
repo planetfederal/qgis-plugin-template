@@ -64,6 +64,8 @@ def setup(options):
     src = tmpCommonsPath / "lib-qgis-commons-master" / "qgiscommons"
     src.copytree(dst.abspath())
     tmpCommonsPath.rmtree()
+    
+    [boundlessCommons]
 
     try:
         import pip
