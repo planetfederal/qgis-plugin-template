@@ -177,9 +177,10 @@ def create_settings_docs(options):
     for setting in settings:
         grouped[setting["group"]].append(setting)
     with open (doc_file, "w") as f:
-        f.write("Plugin settings\n===============\n\n"
+        f.write(".. _plugin_settings:\n\n"
+                "Plugin settings\n===============\n\n"
                 "The plugin can be adjusted using the following settings, "
-                "to be found in its settings dialog.\n")
+                "to be found in its settings dialog (|path_to_settings|).\n")
         for groupName, group in grouped.iteritems():
             section_marks = "-" * len(groupName)
             f.write("\n%s\n%s\n\n"

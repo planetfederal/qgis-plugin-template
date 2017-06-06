@@ -224,6 +224,7 @@ latex_documents = [
 rst_epilog = """
 .. |BLQGIS| replace:: *Bouldless Desktop*
 .. |current_plugin| replace:: *[pluginname]*
+.. |path_to_settings| replace:: :menuselection:`[path_to_settings]`
 """
 
 
