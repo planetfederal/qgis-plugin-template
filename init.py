@@ -48,7 +48,6 @@ def main():
     pluginClassName = (prompt("Plugin class name [Leave empty to use '%s']: " % defaultClassName,
                             lambda s: s == removeInvalidChars(s)) or defaultClassName)
 
-    addCommons = prompt("Add commons library?[Y/n]:", lambda s: s.lower() in ["y", "n", ""]).lower() in ["y", ""]
     addBoundlessCommons = prompt("Add Boundless commons library?[Y/n]:", lambda s: s.lower() in ["y", "n", ""]).lower() in ["y", ""]
 
     authorName = prompt('Plugin author: ', lambda v : bool(v.strip()))
