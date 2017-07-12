@@ -52,15 +52,10 @@ class [pluginclassname]:
         self.iface.addPluginToMenu("[pluginname]", self.action)
         self.iface.addToolBarIcon(self.action)
 
-        helpIcon = QgsApplication.getThemeIcon('/mActionHelpAPI.png')
-        self.helpAction = QAction(helpIcon, "Help...", self.iface.mainWindow())
-        self.helpAction.setObjectName("[pluginshortname]Help")
-        self.helpAction.triggered.connect(lambda: webbrowser.open_new(
-                        "file://" + os.path.join(os.path.dirname(__file__), "docs", "html", "index.html")))
-        self.iface.addPluginToMenu("[pluginname]", self.helpAction)
-
         addSettingsMenu("[pluginname]")
+        addHelpMenu("[pluginname")
         addAboutMenu("[pluginname]")
+
 
         try:
             from lessons import addLessonsFolder
@@ -88,6 +83,7 @@ class [pluginclassname]:
         self.iface.removeToolBarIcon(self.action)
         removeSettingsMenu("[pluginname]")
         removeAboutMenu("[pluginname]")
+        removeHelpMenu("[pluginname]")
 
     def run(self):
         pass
