@@ -30,7 +30,9 @@ from qgis.PyQt.QtWidgets import QAction
 
 from qgis.core import QgsApplication
 
-from qgiscommons.settings import addSettingsMenu, removeSettingsMenu, addAboutMenu, removeAboutMenu, readSettings
+from qgiscommons.settings import readSettings
+from qgiscommons.gui.settings import addSettingsMenu, removeSettingsMenu
+from qgiscommons.gui.addAboutMenu, removeAboutMenu, addHelpMenu, removeHelpMenu
 
 class [pluginclassname]:
     def __init__(self, iface):
@@ -55,7 +57,6 @@ class [pluginclassname]:
         addSettingsMenu("[pluginname]")
         addHelpMenu("[pluginname")
         addAboutMenu("[pluginname]")
-
 
         try:
             from lessons import addLessonsFolder
