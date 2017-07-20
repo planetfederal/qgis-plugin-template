@@ -22,7 +22,6 @@ options(
     plugin = Bunch(
         name = '[pluginshortname]',
         ext_libs = path('[pluginshortname]/ext-libs'),
-        ext_src = path('[pluginshortname]/ext-src'),
         source_dir = path('[pluginshortname]'),
         package_dir = path('.'),
         tests = ['test', 'tests'],
@@ -48,7 +47,6 @@ def setup(options):
     '''install dependencies'''
     clean = getattr(options, 'clean', False)
     ext_libs = options.plugin.ext_libs
-    ext_src = options.plugin.ext_src
     if clean:
         ext_libs.rmtree()
     ext_libs.makedirs()
@@ -62,7 +60,7 @@ def setup(options):
         error('FATAL: Unable to import pip, please install it first!')
         sys.exit(1)
 
-    os.environ['PYTHONPATH'] = ext_libs.abspath()
+    os.environ['PYTHONPATH'] = str(ext_libs.abspath())
     for req in runtime + test:
         pip.main(['install',
                   '-t',
