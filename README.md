@@ -20,17 +20,15 @@ Notice that, since the script modifies the template files in place, once you run
 
 ## What it contains
 
-The created plugin template has the following elements
+The created plugin template has the following elements:
 
 * An empty plugin class (`plugin.py` in the folder named with the short name of your plugin).
 
-* A `docs`folder with a Sphinx project. Edit the `docs/source/index.rst` file to add content. By default, t contains a single input file, `intro.rst`, which is empty.
+* A `docs`folder with a Sphinx project. Edit the `docs/source/index.rst` file to add content. By default, it contains a single input file, `intro.rst`, which is empty.
 
 * A `_lessons` folder in the plugin folder, with the required structure to add lessons by adding subfolders. A single sample lesson is added in a folder named `samplelesson`. Use that as template to add more lessons. Lessons will be automatically added when the plugin is loaded, since the necessary code is already in the plugin class constructor.
 
-* A `tests` folder in the plugin folder, with the required structure to add tests for the Tester plugin. A `testerplugin.py` file is added, which contains sample unit and semi-automatede tests, to use as a starting point. Tests added to that file will be automatically added to the tester plugin when the plugin is loaded, since the necessary code is already in the plugin class constructor.
-
-* If the option to add a QGIS commons library is selected when running the init script, a folder named `qgiscommons` will be added to the plugin folder, containing the commons library
+* A `tests` folder in the plugin folder, with the required structure to add tests for the [Tester plugin](https://github.com/boundlessgeo/qgis-tester-plugin). A `testerplugin.py` file is added, which contains sample unit and semi-automated tests, to use as a starting point. Tests added to that file will be automatically added to the Tester plugin when the plugin is loaded, since the necessary code is already in the plugin class constructor.
 
 * If the option to add a Boundless commons library is selected when running the init script, a folder named `boundlesscommons` will be added to the plugin folder, containing the Boundless commons library
 
@@ -38,7 +36,7 @@ The created plugin template has the following elements
 
 * A `pavement.py` file with the following tasks:
 
-    + `setup`. Downloads and installs the required dependenciesfor the plugin  in the `ext-libs` folder. This folder is added to the PYTHONPATH by default by the plugin itself. The list of dependencies should be in the `requirements.txt` file, listing the PyPI names of the libraries, one per line.
+    + `setup`. Downloads and installs the required dependenciesfor the plugin  in the `ext-libs` folder. This folder is added to the PYTHONPATH by default by the plugin itself. The list of dependencies should be in the `requirements.txt` file, listing the PyPI names of the libraries, one per line. By default, the template contains the [qgiscommons](https://github.com/boundlessgeo/lib-qgis-commons) library as its only dependency.
 
     + `install`. Installs the plugin into the `~/.qgis2/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
 
@@ -46,7 +44,7 @@ The created plugin template has the following elements
 
     + `install3`. Installs the plugin into the `~/.qgis3/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
 
-    + `package`. Creates a `package.zip` file with the content of the file, ready to be published. It includes dependencies as well, but it will not download them, so the `setup` task has to be run before packaging. Accepts a `test`or `-t` parameter, which indicates that tests should also bepackaged. By default, tests are not added.
+    + `package`. Creates a `package.zip` file with the content of the file, ready to be published. It includes dependencies as well, but it will not download them, so the `setup` task has to be run before packaging. Accepts a `test`or `-t` parameter, which indicates that tests should also be packaged. By default, tests are not added.
 
 * A `README.rst` file with instructions on how to install the plugin.
 
