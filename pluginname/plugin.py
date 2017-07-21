@@ -55,7 +55,7 @@ class [pluginclassname]:
         self.iface.addToolBarIcon(self.action)
 
         addSettingsMenu("[pluginname]")
-        addHelpMenu("[pluginname")
+        addHelpMenu("[pluginname]")
         addAboutMenu("[pluginname]")
 
         try:
