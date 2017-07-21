@@ -32,7 +32,7 @@ from qgis.core import QgsApplication
 
 from qgiscommons.settings import readSettings
 from qgiscommons.gui.settings import addSettingsMenu, removeSettingsMenu
-from qgiscommons.gui.addAboutMenu, removeAboutMenu, addHelpMenu, removeHelpMenu
+from qgiscommons.gui import addAboutMenu, removeAboutMenu, addHelpMenu, removeHelpMenu
 
 class [pluginclassname]:
     def __init__(self, iface):
