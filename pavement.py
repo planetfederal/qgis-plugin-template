@@ -105,15 +105,15 @@ def _install(folder, options):
 
 @task
 def install(options):
-    _install(".qgis2")
+    _install(".qgis2", options)
 
 @task
 def installdev(options):
-    _install(".qgis-dev")
+    _install(".qgis-dev", options)
 
 @task
 def install3(options):
-    _install(".qgis3")
+    _install(".qgis3", options)
 
 @task
 @cmdopts([
