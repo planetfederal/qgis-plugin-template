@@ -30,8 +30,7 @@ from qgis.PyQt.QtWidgets import QAction
 
 from qgis.core import QgsApplication
 
-from qgiscommons.settings import readSettings
-from qgiscommons.gui.settings import addSettingsMenu, removeSettingsMenu
+from qgiscommons.settings import readSettings, addSettingsMenu, removeSettingsMenu
 from qgiscommons.gui import addAboutMenu, removeAboutMenu, addHelpMenu, removeHelpMenu
 
 class [pluginclassname]:
