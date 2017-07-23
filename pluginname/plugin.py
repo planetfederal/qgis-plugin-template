@@ -47,7 +47,7 @@ class [pluginclassname]:
         readSettings()
 
     def initGui(self):
-        icon = QIcon(os.path.dirname(__file__) + "[pluginshortname].png")
+        icon = QIcon(os.path.dirname(__file__) + "icons/desktop.png")
         self.action = QAction(icon, "[pluginname]", self.iface.mainWindow())
         self.action.setObjectName("start[pluginshortname]")
         self.action.triggered.connect(self.run)
