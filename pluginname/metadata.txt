@@ -9,7 +9,7 @@ version=1.0
 author=Boundless
 email=info@boundlessgeo.com
 
-roles=desktop-qgis-plugin-dev
+roles=desktop-qgis-plugin-dev,desktop-qgis-plugin-[pluginshortname]
 
 icon=icons/desktop.svg
 
