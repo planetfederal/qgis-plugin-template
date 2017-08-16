@@ -21,7 +21,7 @@ from paver.doctools import html
 options(
     plugin = Bunch(
         name = '[pluginshortname]',
-        ext_libs = path('[pluginshortname]/ext-libs'),
+        ext_libs = path('[pluginshortname]/extlibs'),
         source_dir = path('[pluginshortname]'),
         package_dir = path('.'),
         tests = ['test', 'tests'],
@@ -50,6 +50,9 @@ def setup(options):
     if clean:
         ext_libs.rmtree()
     ext_libs.makedirs()
+    initPath = ext_libs / "__init__.py"
+    with open(initPath.abspath(), "a") as f:
+        pass
     runtime, test = read_requirements()
     
     [boundlessCommons]
@@ -224,7 +227,7 @@ def pep8(args):
     ignore = ['E203', 'E121', 'E122', 'E123', 'E124', 'E125', 'E126', 'E127',
         'E128', 'E402']
     styleguide = pep8.StyleGuide(ignore=ignore,
-                                 exclude=['*/ext-libs/*', '*/ext-src/*'],
+                                 exclude=['*/extlibs/*', '*/ext-src/*'],
                                  repeat=True, max_line_length=79,
                                  parse_argv=args)
     styleguide.input_dir(options.plugin.source_dir)

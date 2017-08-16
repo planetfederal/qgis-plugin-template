@@ -24,12 +24,6 @@ __copyright__ = '(C) [year] Boundless, http://boundlessgeo.com'
 
 __revision__ = '$Format:%H$'
 
-
-import os
-import site
-
-site.addsitedir(os.path.abspath(os.path.dirname(__file__) + '/ext-libs'))
-
 def classFactory(iface):
     from plugin import [pluginclassname]
     return [pluginclassname](iface)
