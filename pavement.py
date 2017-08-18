@@ -22,6 +22,7 @@ options(
     plugin = Bunch(
         name = '[pluginshortname]',
         ext_libs = path('[pluginshortname]/extlibs'),
+        ext_src = path('[pluginshortname]/ext-src'),
         source_dir = path('[pluginshortname]'),
         package_dir = path('.'),
         tests = ['test', 'tests'],
@@ -80,7 +81,7 @@ def read_requirements():
         idx = lines.index(divider)
     except ValueError:
         raise BuildFailure('expected to find "%s" in requirements.txt' % divider)
-    not_comments = lambda s,e: [ l for l in lines[s:e] if l[0] != '#']
+    not_comments = lambda s,e: [l for l in lines[s:e] if l[0] != '#']
     return not_comments(0, idx), not_comments(idx+1, None)
 
 
@@ -166,7 +167,7 @@ def create_settings_docs(options):
     grouped = defaultdict(list)
     for setting in settings:
         grouped[setting["group"]].append(setting)
-    with open (doc_file, "w") as f:
+    with open(doc_file, "w") as f:
         f.write(".. _plugin_settings:\n\n"
                 "Plugin settings\n===============\n\n"
                 "The plugin can be adjusted using the following settings, "
@@ -224,10 +225,14 @@ def pep8(args):
         sys.exit(1)
 
     # Errors to ignore
+    ext_libs_basename = os.path.basename(options.plugin.ext_libs)
+    ext_src_basename = os.path.basename(options.plugin.ext_src)
+
     ignore = ['E203', 'E121', 'E122', 'E123', 'E124', 'E125', 'E126', 'E127',
         'E128', 'E402']
     styleguide = pep8.StyleGuide(ignore=ignore,
-                                 exclude=['*/extlibs/*', '*/ext-src/*'],
+                                 exclude=['*/{}/*'.format(ext_libs_basename),
+                                          '*/{}/*'.format(ext_src_basename)],
                                  repeat=True, max_line_length=79,
                                  parse_argv=args)
     styleguide.input_dir(options.plugin.source_dir)
@@ -254,7 +259,9 @@ def autopep8(args):
 
     cmd_args = autopep8.parse_args(args)
 
-    excludes = ('ext-lib', 'ext-src')
+    ext_libs_basename = os.path.basename(options.plugin.ext_libs)
+    ext_src_basename = os.path.basename(options.plugin.ext_src)
+    excludes = (ext_libs_basename, ext_src_basename)
     for p in options.plugin.source_dir.walk():
         if any(exclude in p for exclude in excludes):
             continue
