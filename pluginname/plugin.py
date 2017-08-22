@@ -30,9 +30,9 @@ from qgis.PyQt.QtWidgets import QAction
 
 from qgis.core import QgsApplication
 
-from extlibs.qgiscommons.settings import readSettings
-from extlibs.qgiscommons.gui.settings import addSettingsMenu, removeSettingsMenu
-from extlibs.qgiscommons.gui import addAboutMenu, removeAboutMenu, addHelpMenu, removeHelpMenu
+from extlibs.qgiscommons2.settings import readSettings
+from extlibs.qgiscommons2.gui.settings import addSettingsMenu, removeSettingsMenu
+from extlibs.qgiscommons2.gui import addAboutMenu, removeAboutMenu, addHelpMenu, removeHelpMenu
 
 class [pluginclassname]:
     def __init__(self, iface):

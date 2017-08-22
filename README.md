@@ -36,7 +36,7 @@ The created plugin template has the following elements:
 
 * A `pavement.py` file with the following tasks:
 
-    + `setup`. Downloads and installs the required dependenciesfor the plugin  in the `ext-libs` folder. This folder is added to the PYTHONPATH by default by the plugin itself. The list of dependencies should be in the `requirements.txt` file, listing the PyPI names of the libraries, one per line. By default, the template contains the [qgiscommons](https://github.com/boundlessgeo/lib-qgis-commons) library as its only dependency.
+    + `setup`. Downloads and installs the required dependenciesfor the plugin  in the `extlibs` folder. This folder is added to the PYTHONPATH by default by the plugin itself. The list of dependencies should be in the `requirements.txt` file, listing the PyPI names of the libraries, one per line. By default, the template contains the [qgiscommons](https://github.com/boundlessgeo/lib-qgis-commons) library as its only dependency.
 
     + `install`. Installs the plugin into the `~/.qgis2/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
 

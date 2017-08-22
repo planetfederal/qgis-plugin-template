@@ -58,7 +58,7 @@ def main():
     if addBoundlessCommons:
         boundlessCommons = '''
     tmpCommonsPath = path(__file__).dirname() / "boundlesscommons"
-    dst = ext_libs / "boundlesscommons"
+    dst = extlibs / "boundlesscommons"
     if dst.exists():
         dst.rmtree()
     r = requests.get("https://github.com/boundlessgeo/lib-qgis-boundless-commons/archive/master.zip", stream=True)
