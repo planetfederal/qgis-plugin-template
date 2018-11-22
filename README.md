@@ -39,7 +39,7 @@ Here is an explanation of each element in the UI.
 
 	* "Tests for Tester plugin". If checked, a `tests` folder will be added to the plugin folder, with the required structure to add tests for the [Tester plugin](https://github.com/boundlessgeo/qgis-tester-plugin). A `testerplugin.py` file is added, which contains sample unit and semi-automated tests, to use as a starting point. Tests added to that file will be automatically added to the Tester plugin when the plugin is loaded, since the necessary code is also added to the plugin class constructor.
 
-	A folder with sample data is included in the `tests` folder, to be used for testing your plugin.
+		A folder with sample data is included in the `tests` folder, to be used for testing your plugin.
 
 	* "Travis files for Travis CI integration". If checked, a `travis.yml` file will be added for Travis CI integration. It will define a travis task that runs the unit tests that are added in case the "Tests for Tester plugin" option has been checked.
 
@@ -63,7 +63,7 @@ Here is an explanation of each element in the UI.
 
 	* Flag as experimental. If checked, the plugin will be flagged as experimental in the metadata file.
 
-# Other elements in the generated plugin.
+## Other elements in the generated plugin.
 
 Regardless of the configuration selected in the Plugin Creator UI, plugins generated with the Plugin Creator always contain the following elements:
 
