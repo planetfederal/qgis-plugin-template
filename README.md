@@ -35,7 +35,7 @@ Here is an explanation of each element in the UI.
 
 	* Sphinx documentation project: If checked, a `docs` folder with a Sphinx project will be added to the plugin folder. Edit the `docs/source/index.rst` file to add content. By default, it contains a single input file, `intro.rst`, which is empty.
 
-	* "Lessons for Lessons plugin". If checked, a `_lessons` folder will be added to the plugin folder, with the required structure to add lessons for the Lessons plugin. A single sample lesson is added in a folder named `samplelesson`. Use that as a template to add more lessons. Lessons will be automatically added when the plugin is loaded, since the necessary code is also added to the plugin class constructor.
+	* "Lessons for Lessons plugin". If checked, a `_lessons` folder will be added to the plugin folder, with the required structure to add lessons for the [Lessons plugin](https://github.com/boundlessgeo/qgis-lessons-plugin). A single sample lesson is added in a folder named `samplelesson`. Use that as a template to add more lessons. Lessons will be automatically added when the plugin is loaded, since the necessary code is also added to the plugin class constructor.
 
 	* "Tests for Tester plugin". If checked, a `tests` folder will be added to the plugin folder, with the required structure to add tests for the [Tester plugin](https://github.com/boundlessgeo/qgis-tester-plugin). A `testerplugin.py` file is added, which contains sample unit and semi-automated tests, to use as a starting point. Tests added to that file will be automatically added to the Tester plugin when the plugin is loaded, since the necessary code is also added to the plugin class constructor.
 
@@ -43,7 +43,7 @@ Here is an explanation of each element in the UI.
 
 	* "Travis files for Travis CI integration". If checked, a `travis.yml` file will be added for Travis CI integration. It will define a travis task that runs the unit tests that are added in case the "Tests for Tester plugin" option has been checked.
 
-	* "Add qgiscommons library". if checked, the [qgiscommons] library is added as a dependency of the plugin. If this option is enabled, the following ones will be available:
+	* "Add qgiscommons library". if checked, the [qgiscommons](https://github.com/boundlessgeo/lib-qgis-commons) library is added as a dependency of the plugin. If this option is enabled, the following ones will be available:
 
 		* "Add Settings menu". If your plugin has user settings, check this to have a corresponding menu that will display a custom interface to edit settings values. Settings are defined in a `settings.json` file in the plugin folder. Open it and edit there the settings that you need for your plugin, defining its name, default value and type. Check the qgiscommons help to know more about how to later use settings values.
 
