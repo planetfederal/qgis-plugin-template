@@ -1,52 +1,86 @@
-# qgis-plugin-template
+# QGIS Plugin Creator
 
-A template for plugins.
+A simple plugin that provides a UI to create the skeleton of a functional plugin.
+
+Largely based on Gary Sherman's PluginBuilder plugin.
 
 ## How to use it
 
-Clone this repo or just copy its content in you system
+Click on the "Plugins/Plugin Creator/Create plugin skeleton" menu to open the plugin dialog.
 
-Open a terminal in the folder where the content of this repo is found, and type `python init.py`.
+Enter the destination folder where you want to plugin folder to be created.
 
-You will be prompted to enter the name of your plugin, a short name (with no spaces, to be used for folder name, etc), and a class name. Default options for short name and class name will be proposed based on the plugin name,so you do not need to explicitely type them unless you want to use different names.
+Enter the required information in the dialog widgets and click OK to generate the plugin.
 
-![](console.png)
+Here is an explanation of each element in the UI.
 
-The script will modify the template files and leave the content of the folder ready to be used for creating your own plugin.
+* "General" tab
 
-You might want to remove the `.git` folder, in case you have cloned the repo (the script will try to remove it, but that might fail in some cases).
+	* Plugin name: The name of the plugin. Class names and module names will be derived from it
 
-Notice that, since the script modifies the template files in place, once you run it, you will not be able to run it again (you could actually run it, but it wouldn't work as expected). The `init.py` file is removed after it's executed.
+	* Short description: A one-line description of the plugin.
 
-## What it contains
+	* Detailed description: A longer description of the plugin.
 
-The created plugin template has the following elements:
+	* Version number: The version of the plugin.
 
-* An empty plugin class (`plugin.py` in the folder named with the short name of your plugin).
+	* Minimum QGIS version: The minimum QGIS version needed to run the plugin. Notice that the template includes QGIS3-compatible code, so the minimum version has to be greater or equal to 3.0. 
 
-* A `docs`folder with a Sphinx project. Edit the `docs/source/index.rst` file to add content. By default, it contains a single input file, `intro.rst`, which is empty.
+	* Author: The author of the plugin.
 
-* A `_lessons` folder in the plugin folder, with the required structure to add lessons by adding subfolders. A single sample lesson is added in a folder named `samplelesson`. Use that as template to add more lessons. Lessons will be automatically added when the plugin is loaded, since the necessary code is already in the plugin class constructor.
+	* Email. The email of the author.
 
-* A `tests` folder in the plugin folder, with the required structure to add tests for the [Tester plugin](https://github.com/boundlessgeo/qgis-tester-plugin). A `testerplugin.py` file is added, which contains sample unit and semi-automated tests, to use as a starting point. Tests added to that file will be automatically added to the Tester plugin when the plugin is loaded, since the necessary code is already in the plugin class constructor.
 
-* If the option to add a Boundless commons library is selected when running the init script, a folder named `boundlesscommons` will be added to the plugin folder, containing the Boundless commons library
+* "Options" tab
 
-* A `travis.yml` file for Travis CI integration
+	* Sphinx documentation project: If checked, a `docs` folder with a Sphinx project will be added to the plugin folder. Edit the `docs/source/index.rst` file to add content. By default, it contains a single input file, `intro.rst`, which is empty.
+
+	* "Lessons for Lessons plugin". If checked, a `_lessons` folder will be added to the plugin folder, with the required structure to add lessons for the Lessons plugin. A single sample lesson is added in a folder named `samplelesson`. Use that as a template to add more lessons. Lessons will be automatically added when the plugin is loaded, since the necessary code is also added to the plugin class constructor.
+
+	* "Tests for Tester plugin". If checked, a `tests` folder will be added to the plugin folder, with the required structure to add tests for the [Tester plugin](https://github.com/boundlessgeo/qgis-tester-plugin). A `testerplugin.py` file is added, which contains sample unit and semi-automated tests, to use as a starting point. Tests added to that file will be automatically added to the Tester plugin when the plugin is loaded, since the necessary code is also added to the plugin class constructor.
+
+	A folder with sample data is included in the `tests` folder, to be used for testing your plugin.
+
+	* "Travis files for Travis CI integration". If checked, a `travis.yml` file will be added for Travis CI integration. It will define a travis task that runs the unit tests that are added in case the "Tests for Tester plugin" option has been checked.
+
+	* "Add qgiscommons library". if checked, the [qgiscommons] library is added as a dependency of the plugin. If this option is enabled, the following ones will be available:
+
+		* "Add Settings menu". If your plugin has user settings, check this to have a corresponding menu that will display a custom interface to edit settings values. Settings are defined in a `settings.json` file in the plugin folder. Open it and edit there the settings that you need for your plugin, defining its name, default value and type. Check the qgiscommons help to know more about how to later use settings values.
+
+		* "Add About menu". Adds a "About" menu to the plugin menu.
+
+		* "Add Help menu". Adds a "Help" menu to the plugin menu. Clicking on it will open a webbrowser and show the help files built based on the Sphinx documents (you should enable that option as well, unless you want to manually create the help files using another tool)
+
+* "Publication" tab.
+
+	* Bug tracker.  The URL of the plugin bug tracker.
+
+	* Repository. The URL of the repository where the code of the plugin will be stored.
+
+	* Homepage. The URL of the plugin project homepage (optional)
+
+	* Tags. A comma-separated list of tags used to categorize the plugin.
+
+	* Flag as experimental. If checked, the plugin will be flagged as experimental in the metadata file.
+
+# Other elements in the generated plugin.
+
+Regardless of the configuration selected in the Plugin Creator UI, plugins generated with the Plugin Creator always contain the following elements:
+
+
+* A plugin class (`plugin.py` in the folder named with the short name of your plugin). The plugin adds a single menu item. Selecting it will open a simple dialog. The .ui file corresponding to that dialog is located in `ui/[pluginname]dialog.py`. Edit it with Qt Designer to adapt it to your needs.
+
+* A `requirements.txt` file with additional libraries required by the plugin.
 
 * A `pavement.py` file with the following tasks:
 
-    + `setup`. Downloads and installs the required dependenciesfor the plugin  in the `extlibs` folder. This folder is added to the PYTHONPATH by default by the plugin itself. The list of dependencies should be in the `requirements.txt` file, listing the PyPI names of the libraries, one per line. By default, the template contains the [qgiscommons](https://github.com/boundlessgeo/lib-qgis-commons) library as its only dependency.
+    + `setup`. Downloads and installs the required dependencies for the plugin  in the `extlibs` folder. This folder is added to the PYTHONPATH by default by the plugin itself. The list of dependencies should be in the `requirements.txt` file, listing the PyPI names of the libraries, one per line. If you checked the "Add qgiscommons library" check box, the generated plugin will contains the [qgiscommons](https://github.com/boundlessgeo/lib-qgis-commons) library as its only dependency. Otherwise it will contain no dependencies.
 
-    + `install`. Installs the plugin into the `~/.qgis2/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
+    + `install`. Installs the plugin into the user plugins folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
 
-    + `installdev`. Installs the plugin into the `~/.qgis-dev/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
+    + `package`. Creates a `package.zip` file with the content of the plugin, ready to be published. It includes dependencies as well, but it will not download them, so the `setup` task has to be run before packaging. Accepts a `test`or `-t` parameter, which indicates that tests should also be packaged. By default, tests are not added.
 
-    + `install3`. Installs the plugin into the `~/.qgis3/python/plugins` folder. It might copy the plugin folder itself, or create a symlink, depending on the OS.
-
-    + `package`. Creates a `package.zip` file with the content of the file, ready to be published. It includes dependencies as well, but it will not download them, so the `setup` task has to be run before packaging. Accepts a `test`or `-t` parameter, which indicates that tests should also be packaged. By default, tests are not added.
-
-* A `README.rst` file with instructions on how to install the plugin.
+* An empty `README.md` file, which just contains the name of the plugin in its header.
 
 
 

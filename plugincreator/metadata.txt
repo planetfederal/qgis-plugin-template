@@ -1,0 +1,7 @@
+[general]
+name=Plugin creator
+description=Plugin creator
+version=1.0
+qgisMinimumVersion=3.0
+author=Victor Olaya
+email=volaya@boundlessgeo.com
