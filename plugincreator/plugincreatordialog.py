@@ -53,16 +53,15 @@ class PluginCreatorDialog(BASE, WIDGET):
         self.chkAbout.setEnabled(state)
 
     def selectTags(self):
-        dialog = SelectTagsDialog()
-        dialog.show()
+        dialog = SelectTagsDialog(self)
         ok = dialog.exec_()
         if ok:
-            selected = tag_dialog.listView.selectedIndexes()
+            selected = dialog.listView.selectedIndexes()
             seltags = []
             for tag in selected:
                 seltags.append(tag.data())
             taglist = ", ".join(seltags)
-            self.dialog.tags.setText(taglist)
+            self.txtTags.setText(taglist)
 
     def selectFolder(self):
         folder = QFileDialog.getExistingDirectory(self, 'Select output folder')

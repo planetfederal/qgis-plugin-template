@@ -8,11 +8,10 @@ WIDGET, BASE = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'selecttagsdialog.ui'))
 
 
-class SelectTagsDialog(QtWidgets.QDialog, WIDGET):
+class SelectTagsDialog(BASE, WIDGET):
     def __init__(self, parent=None):
         super(SelectTagsDialog, self).__init__(parent)
         self.setupUi(self)
-
         tagFile = os.path.join(os.path.dirname(__file__), 'taglist.txt')
 
         with open(tagFile) as tf:
