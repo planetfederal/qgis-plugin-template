@@ -1,2 +1,0 @@
-For system administrator
-========================
