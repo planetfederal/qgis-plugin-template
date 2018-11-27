@@ -2,8 +2,7 @@ import os
 from qgis.utils import iface
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtWidgets import QFileDialog
-from qgis.PyQt.QtWidgets import QSizePolicy
+from qgis.PyQt.QtWidgets import QFileDialog, QListWidgetItem, QSizePolicy
 from qgis.gui import QgsMessageBar
 from qgis.core import Qgis 
 
@@ -28,12 +27,26 @@ class WrongNumValueException(Exception):
         self.tab = tab
         self.errormessage = "Version numbers must be numeric"
 
+PLUGIN, DATABASE, RASTER, VECTOR, WEB = range(5)
+
+class MenuItem(QListWidgetItem):
+
+    def __init__(self, name, parent):        
+        super(MenuItem, self).__init__(name)
+        self.name = name
+        self.parent = parent
+
+    def updateInfo(self, name, parent):
+        self.name = name
+        self.parent = parent
+        self.setText(name)
 
 class PluginCreatorDialog(BASE, WIDGET):
 
     def __init__(self, parent=None):
         parent = parent or iface.mainWindow()
         super(PluginCreatorDialog, self).__init__(parent)
+        self.menus = {}
         self.setupUi(self)
         self.bar = QgsMessageBar()
         self.bar.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -45,6 +58,36 @@ class PluginCreatorDialog(BASE, WIDGET):
         self.buttonBox.accepted.connect(self.okPressed)
         self.buttonBox.rejected.connect(self.cancelPressed)
         self.chkQgisCommons.stateChanged.connect(self.qgiscommonsChanged)
+        self.btnAddMenu.clicked.connect(self.addMenuClicked)
+        self.btnRemoveMenu.clicked.connect(self.removeMenuClicked)
+        self.listMenus.currentItemChanged.connect(self.listItemChanged)
+
+    def listItemChanged(self, current, previous):
+        if current:
+            self.txtMenuTitle.setText(current.name)
+            self.comboParentMenu.setCurrentIndex(current.parent)
+        else:
+            self.txtMenuTitle.setText("")
+            self.comboParentMenu.setCurrentIndex(0)
+
+    def addMenuClicked(self):
+        itemToUpdate = None
+        name = self.txtMenuTitle.text()
+        for i in range(self.listMenus.count()):
+            item = self.listMenus.item(i)
+            if item.name == name:
+                itemToUpdate = item
+                break
+        if itemToUpdate:
+            itemToUpdate.updateInfo(name, self.comboParentMenu.currentIndex())
+        else:
+            newItem = MenuItem(name, self.comboParentMenu.currentIndex())      
+            self.listMenus.addItem(newItem)
+
+    def removeMenuClicked(self):        
+        self.listMenus.takeItem(self.listMenus.currentRow())
+        self.txtMenuTitle.setText("")
+        self.comboParentMenu.setCurrentIndex(0)
 
     def qgiscommonsChanged(self, state):
         state = state == Qt.Checked
@@ -108,6 +151,11 @@ class PluginCreatorDialog(BASE, WIDGET):
             self.pluginInfo["addSettings"] = self.chkSettings.isChecked() and qgiscommons
             self.pluginInfo["addAbout"] = self.chkAbout.isChecked() and qgiscommons
             self.pluginInfo["addHelp"] = self.chkHelp.isChecked() and qgiscommons
+            menus = {}
+            for i in range(self.listMenus.count()):
+                item = self.listMenus.item(i)
+                menus[item.name] = item.parent
+            self.pluginInfo["menus"] = menus
         except WrongTextValueException as e:
             self.pluginInfo = None
             self._showError(e)

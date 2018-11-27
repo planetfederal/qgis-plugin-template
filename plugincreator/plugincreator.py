@@ -12,7 +12,7 @@ def removeInvalidChars(s):
     return s
 
 def className(s):
-    return removeInvalidChars(s.title())
+    return ''.join(removeInvalidChars(x).capitalize() for x in s.split(' '))
 
 def replaceInFiles(filename, toReplace):
     with open(filename) as f:
@@ -120,7 +120,38 @@ def createPlugin(pluginInfo, destFolder):
         removeAboveMenu("%s")
         ''' % pluginModuleName
 
-    qgiscommons = "qgiscommons" if pluginInfo["addQgisCommons"] else ""
+    methods = ""
+    functionNames = ["Menu", "DatabaseMenu", "RasterMenu", "VectorMenu", "WebMenu"]
+    for menuName, menuParent in pluginInfo["menus"].items():
+        menuCodeName = className(menuName)
+        replace = {"menuname": menuName, "menucodename": menuCodeName,
+                    "pluginname": pluginName, "funcname": functionNames[menuParent]}
+        initGui += '''
+        self.action%(menucodename)s = QAction("%(menuname)s", self.iface.mainWindow())
+        self.action%(menucodename)s.setObjectName("start%(menucodename)s")
+        self.action%(menucodename)s.triggered.connect(self.%(menucodename)sclicked)
+        self.iface.addPluginTo%(funcname)s("%(pluginname)s", self.action%(menucodename)s)
+        ''' % replace
+        unload += '''        
+        self.iface.removePluginFrom%(funcname)s("%(pluginname)s", self.action%(menucodename)s)
+        ''' % replace
+        methods += '''
+    def %(menucodename)sclicked(self):
+        pass
+        ''' % replace
+
+    imports = ""
+    qgiscommons = ""
+    if pluginInfo["addQgisCommons"]:
+        imports = '''
+from .extlibs.qgiscommons2.settings import readSettings
+from .extlibs.qgiscommons2.gui.settings import addSettingsMenu, removeSettingsMenu
+from .extlibs.qgiscommons2.gui import addAboutMenu, removeAboutMenu, addHelpMenu, removeHelpMenu
+        '''
+        init += '''
+        readSettings()
+        '''
+        qgiscommons = "qgiscommons"
 
     toReplace = [('[pluginname]', pluginName),
                  ('[pluginmodulename]', pluginModuleName),
@@ -132,6 +163,8 @@ def createPlugin(pluginInfo, destFolder):
                  ('[initgui]', initGui),
                  ('[unload]', unload),
                  ('[init]', init),
+                 ('[imports]', imports),
+                 ('[methods]', methods),
                  ('[qgiscommons]', qgiscommons),
                  ('[version]', pluginInfo["version"]),
                  ('[minversion]', pluginInfo["minVersion"]),
