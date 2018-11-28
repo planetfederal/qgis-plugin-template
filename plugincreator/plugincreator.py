@@ -47,10 +47,14 @@ def createPlugin(pluginInfo, destFolder):
         shutil.rmtree(destFolder)
     shutil.copytree(templateFolder, destFolder)
     os.rename(os.path.join(destFolder, 'pluginname'), os.path.join(destFolder, pluginModuleName))
-    os.rename(os.path.join(destFolder, pluginModuleName, 'ui', 'plugindialog.ui'), 
+    if pluginInfo["addDialog"]:
+        os.rename(os.path.join(destFolder, pluginModuleName, 'ui', 'plugindialog.ui'), 
                 os.path.join(destFolder, pluginModuleName,'ui', '%sdialog.ui' % pluginModuleName))
-    os.rename(os.path.join(destFolder, pluginModuleName, 'ui', 'plugindialog.py'), 
+        os.rename(os.path.join(destFolder, pluginModuleName, 'ui', 'plugindialog.py'), 
                 os.path.join(destFolder,  pluginModuleName, 'ui', '%sdialog.py' % pluginModuleName))
+    else:
+        os.remove(os.path.join(destFolder, pluginModuleName, 'ui', 'plugindialog.ui'))
+        os.remove(os.path.join(destFolder, pluginModuleName, 'ui', 'plugindialog.py'))
 
     if pluginInfo["addTests"]:
         init += '''
@@ -122,21 +126,26 @@ def createPlugin(pluginInfo, destFolder):
 
     methods = ""
     functionNames = ["Menu", "DatabaseMenu", "RasterMenu", "VectorMenu", "WebMenu"]
-    for menuName, menuParent in pluginInfo["menus"].items():
+    for menuName, menuData in pluginInfo["menus"].items():
+        menuParent, menuIcon = menuData
+        destIconFile = os.path.join(destFolder, pluginModuleName, "icons", os.path.basename(menuIcon))
+        shutil.copyfile(menuIcon, destIconFile)
         menuCodeName = className(menuName)
         replace = {"menuname": menuName, "menucodename": menuCodeName,
-                    "pluginname": pluginName, "funcname": functionNames[menuParent]}
+                    "pluginname": pluginName, "funcname": functionNames[menuParent],
+                    "iconname": os.path.basename(menuIcon)}
         initGui += '''
-        self.action%(menucodename)s = QAction("%(menuname)s", self.iface.mainWindow())
+        icon%(menucodename)s = QIcon(os.path.join(os.path.dirname(__file__), "icons", "%(iconname)s"))
+        self.action%(menucodename)s = QAction(icon%(menucodename)s, "%(menuname)s", self.iface.mainWindow())
         self.action%(menucodename)s.setObjectName("start%(menucodename)s")
-        self.action%(menucodename)s.triggered.connect(self.%(menucodename)sclicked)
+        self.action%(menucodename)s.triggered.connect(self.%(menucodename)sClicked)
         self.iface.addPluginTo%(funcname)s("%(pluginname)s", self.action%(menucodename)s)
         ''' % replace
         unload += '''        
         self.iface.removePluginFrom%(funcname)s("%(pluginname)s", self.action%(menucodename)s)
         ''' % replace
         methods += '''
-    def %(menucodename)sclicked(self):
+    def %(menucodename)sClicked(self):
         pass
         ''' % replace
 

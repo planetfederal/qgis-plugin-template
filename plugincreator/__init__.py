@@ -1,7 +1,6 @@
 
 from qgis.PyQt.QtWidgets import QAction
 from plugincreator.plugincreatordialog import PluginCreatorDialog
-from plugincreator.plugincreator import createPlugin
 
 def classFactory(iface):
     return PluginCreatorPlugin(iface)
@@ -23,5 +22,3 @@ class PluginCreatorPlugin:
     def run(self):
         dialog = PluginCreatorDialog()
         dialog.exec_()
-        if dialog.pluginInfo:
-            createPlugin(dialog.pluginInfo, dialog.outputFolder)
