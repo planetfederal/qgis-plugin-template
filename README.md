@@ -43,6 +43,8 @@ Here is an explanation of each element in the UI.
 
 	* "Travis files for Travis CI integration". If checked, a `travis.yml` file will be added for Travis CI integration. It will define a travis task that runs the unit tests that are added in case the "Tests for Tester plugin" option has been checked.
 
+	* "Sample dialog files". If checked, it adds a sample dialog tat can be used in the plugin. A `.ui` file is included, which contains the design of the dialog. A `.py` file is included as well, containing the logic of the dialog. The dialog class is not called from anywhere in the plugin skeleton. It's up to you to instantiate it and use it from the plugin code.
+
 	* "Add qgiscommons library". if checked, the [qgiscommons](https://github.com/boundlessgeo/lib-qgis-commons) library is added as a dependency of the plugin. If this option is enabled, the following ones will be available:
 
 		* "Add Settings menu". If your plugin has user settings, check this to have a corresponding menu that will display a custom interface to edit settings values. Settings are defined in a `settings.json` file in the plugin folder. Open it and edit there the settings that you need for your plugin, defining its name, default value and type. Check the qgiscommons help to know more about how to later use settings values.
@@ -50,6 +52,10 @@ Here is an explanation of each element in the UI.
 		* "Add About menu". Adds a "About" menu to the plugin menu.
 
 		* "Add Help menu". Adds a "Help" menu to the plugin menu. Clicking on it will open a webbrowser and show the help files built based on the Sphinx documents (you should enable that option as well, unless you want to manually create the help files using another tool)
+
+* "Menus" tab.
+
+	Use this tab to add menus that will be available when you plugin is loaded. Type the menu title and select the parent menu under which it should appear. Optionally, you can click on the "Select icon" button and select an icon from the provided sample set. That will open a file selector in the folder where icon files are stored, but you can select any other icon in your file system. The selected icons will be copied to an `icons` folder under the output plugin folder. Click on the "Add Menu" button to add the menu to the list of the ones to add to your plugin.
 
 * "Publication" tab.
 
